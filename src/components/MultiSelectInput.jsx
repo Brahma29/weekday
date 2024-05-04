@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const MultiSelectInput = ({ title, values }) => {
   const [selectedValues, setSelectedValues] = useState([]);
@@ -18,6 +19,7 @@ const MultiSelectInput = ({ title, values }) => {
       <InputLabel>{title}</InputLabel>
       <Select
         multiple
+        IconComponent={KeyboardArrowDownIcon}
         value={selectedValues}
         onChange={(e) => setSelectedValues(e.target.value)}
         input={<OutlinedInput label={title} />}
