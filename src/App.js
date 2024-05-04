@@ -1,11 +1,22 @@
-import logo from './logo.svg';
+import { Container, Grid } from '@mui/material';
 import './App.css';
+import JobCard from './components/JobCard';
 
 function App() {
   return (
-    <div className="App">
-      Started Assessment
-    </div>
+    <Container maxWidth="xl">
+      <Grid container spacing={4}>
+        <Grid item xs={4}>
+          <JobCard />
+        </Grid>
+        <Grid item xs={4}>
+          <JobCard />
+        </Grid>
+        <Grid item xs={4}>
+          <JobCard />
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
