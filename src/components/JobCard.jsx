@@ -94,7 +94,6 @@ const JobCard = ({
 };
 
 const Card = styled(Box)`
-  border: 1px solid gray;
   border-radius: 1.5rem;
   padding: 1.5rem;
   box-shadow: 0px 0px 14px -3px rgba(0, 0, 0, 0.57);
