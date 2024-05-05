@@ -11,11 +11,14 @@ import React, { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const MultiSelectInput = ({ title, values }) => {
-  const [selectedValues, setSelectedValues] = useState([]);
-
+const MultiSelectInput = ({
+  title,
+  values,
+  selectedValues,
+  setSelectedValues,
+}) => {
   return (
-    <FormControl sx={{ m: 1, width: 200 }}>
+    <FormControl sx={{ m: 1, minWidth: 200 }}>
       <InputLabel>{title}</InputLabel>
       <Select
         multiple
@@ -27,13 +30,17 @@ const MultiSelectInput = ({ title, values }) => {
           <Stack gap={1} direction="row" flexWrap="wrap">
             {selectedValues.map((value) => (
               <Chip
+                sx={{ fontSize: "0.75rem", height: 20 }}
                 key={value}
                 label={value}
                 onDelete={() =>
                   setSelectedValues((prev) => prev.filter((v) => v !== value))
                 }
                 deleteIcon={
-                  <CancelIcon onMouseDown={(e) => e.stopPropagation()} />
+                  <CancelIcon
+                    sx={{ width: 15 }}
+                    onMouseDown={(e) => e.stopPropagation()}
+                  />
                 }
               />
             ))}
@@ -41,7 +48,7 @@ const MultiSelectInput = ({ title, values }) => {
         )}
       >
         {values.map((value) => (
-          <MenuItem key={value} value={value}>
+          <MenuItem key={value} value={value.toLowerCase()}>
             {value}
           </MenuItem>
         ))}

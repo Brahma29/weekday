@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useJobsFetcher = (offset, limit) => {
+export const useJobsFetcher = (offset, limit,) => {
     const [jobs, setJobs] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -33,11 +33,9 @@ export const useJobsFetcher = (offset, limit) => {
             .then((response) => response.json())
             .then((result) => {
                 setJobs(prev => [...prev, ...result.jdList]);
-                console.log({ result })
                 setTotalCount(result.totalCount);
-                setLoading(false)
             })
-            .catch((error) => console.error(error));
+            .catch((error) => console.error(error)).finally(() => setLoading(false))
     };
 
     return { jobs, totalCount, loading };
