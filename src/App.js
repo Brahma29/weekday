@@ -1,5 +1,4 @@
 import {
-  Box,
   Chip,
   Container,
   FormControl,
@@ -15,10 +14,9 @@ import "./App.css";
 import JobCard from "./components/JobCard";
 import MultiSelectInput from "./components/MultiSelectInput";
 import { useJobsFetcher } from "./hooks/useJobsFetcher";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import CancelIcon from "@mui/icons-material/Cancel";
-import styled from "styled-components";
 
 function App() {
   const [offset, setOffset] = useState(0);
@@ -95,6 +93,7 @@ function App() {
 
   return (
     <Container maxWidth="xl">
+      {/* Filters Bar */}
       <Stack direction="row" marginBottom={5} marginTop={5} flexWrap="wrap">
         <FormControl sx={{ m: 1, minWidth: 200 }}>
           <InputLabel>Min. Experience</InputLabel>
@@ -200,6 +199,7 @@ function App() {
         </FormControl>
       </Stack>
 
+      {/* Jobs Grid */}
       <Grid container spacing={4}>
         {filteredJobs.map((job, index) => (
           <Grid key={index} item lg={4} md={6} xs={12}>
@@ -218,7 +218,7 @@ function App() {
           </Grid>
         ))}
 
-
+        {/* Loading & Error */}
         <Grid item xs={12}>
           <Stack
             direction="row"
@@ -228,14 +228,16 @@ function App() {
               justifyContent: "center",
             }}
           >
-            {!loading && error ? <Typography>{error}</Typography> : loading && (<Typography>Hang on! Getting more jobs...</Typography>)}
+            {!loading && error ? (
+              <Typography>{error}</Typography>
+            ) : (
+              loading && <Typography>Hang on! Getting more jobs...</Typography>
+            )}
           </Stack>
         </Grid>
-
       </Grid>
     </Container>
   );
 }
-
 
 export default App;
