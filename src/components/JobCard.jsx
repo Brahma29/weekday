@@ -1,4 +1,4 @@
-import { Typography, Box, Button, capitalize } from "@mui/material";
+import { Typography, Box, Button, capitalize, Avatar } from "@mui/material";
 import React from "react";
 
 import styled from "styled-components";
@@ -53,31 +53,17 @@ const JobCard = ({
           <Typography fontWeight={600} color="gray">
             Minimum Experience
           </Typography>
-          <Typography>{experienceRequired} Years</Typography>
+          <Typography>
+            {experienceRequired ? `${experienceRequired} Years` : "NA"}
+          </Typography>
         </Box>
 
-        <Button
-          fullWidth
-          sx={{
-            backgroundColor: "#55efc4",
-            color: "black",
-            fontWeight: 600,
-            marginBottom: "0.5rem",
-          }}
-        >
-          ⚡ Easy Apply
-        </Button>
+        <EasyApplyButton fullWidth>⚡ Easy Apply</EasyApplyButton>
 
-        <Button
-          fullWidth
-          sx={{
-            backgroundColor: "#4943da",
-            color: "white",
-            fontWeight: 600,
-          }}
-        >
-          ⚡ Unlock referal asks
-        </Button>
+        <AskForReferalButton fullWidth>
+          <Avatar sx={{ width: 24, height: 24 }} src="/broken-image.jpg" />{" "}
+          Unlock referal asks
+        </AskForReferalButton>
       </Box>
     </Card>
   );
@@ -163,6 +149,32 @@ const ViewJobButton = styled(Box)`
     rgba(255, 255, 255, 1) 50%,
     rgba(0, 212, 255, 0) 100%
   );
+`;
+
+const EasyApplyButton = styled(Button)`
+  background-color: #55efc4;
+  color: black;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    opacity: 0.8;
+    background-color: #55efc4;
+  }
+`;
+
+const AskForReferalButton = styled(Button)`
+  background-color: #4943da;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &:hover {
+    opacity: 0.8;
+    background-color: #4943da;
+  }
 `;
 
 export default JobCard;

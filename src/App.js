@@ -1,4 +1,5 @@
 import {
+  Box,
   Chip,
   Container,
   FormControl,
@@ -14,15 +15,16 @@ import "./App.css";
 import JobCard from "./components/JobCard";
 import MultiSelectInput from "./components/MultiSelectInput";
 import { useJobsFetcher } from "./hooks/useJobsFetcher";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import CancelIcon from "@mui/icons-material/Cancel";
+import styled from "styled-components";
 
 function App() {
   const [offset, setOffset] = useState(0);
   const limit = 10;
 
-  const { jobs, loading, totalCount } = useJobsFetcher(offset, limit);
+  const { jobs, loading, totalCount, error } = useJobsFetcher(offset, limit);
 
   const [filteredJobs, setFilteredJobs] = useState(jobs);
 
@@ -32,17 +34,19 @@ function App() {
   const [workMode, setWorkMode] = useState([]);
   const [roles, setRoles] = useState([]);
   const [minBasePay, setMinBasePay] = useState(null);
-  const [companyName, setCompanyName] = useState('')
-
+  const [companyName, setCompanyName] = useState("");
 
   const handleCompanyName = (e) => {
-    if (e.target.value === "") setFilteredJobs(jobs)
+    if (e.target.value === "") setFilteredJobs(jobs);
     setCompanyName(e.target.value);
-    setFilteredJobs((prev) => prev.filter((job) => job.companyName.toLowerCase().includes(e.target.value)))
-  }
+    setFilteredJobs((prev) =>
+      prev.filter((job) =>
+        job.companyName.toLowerCase().includes(e.target.value)
+      )
+    );
+  };
 
   const applyFilters = () => {
-    console.log("I got called");
     const filtered = jobs.filter((job) => {
       const exp = minExp === null || job.minExp >= minExp;
       const locationCheck =
@@ -126,7 +130,7 @@ function App() {
           values={[
             "Bangalore",
             "Chennai",
-            "Delhi",
+            "Delhi NCR",
             "Kolkata",
             "Mumbai",
             "Indore",
@@ -187,13 +191,18 @@ function App() {
         </FormControl>
 
         <FormControl sx={{ m: 1, minWidth: 200 }}>
-          <OutlinedInput type="text" placeholder="Company Name" value={companyName} onChange={handleCompanyName} />
+          <OutlinedInput
+            type="text"
+            placeholder="Company Name"
+            value={companyName}
+            onChange={handleCompanyName}
+          />
         </FormControl>
       </Stack>
 
       <Grid container spacing={4}>
         {filteredJobs.map((job, index) => (
-          <Grid key={index} item xs={4}>
+          <Grid key={index} item lg={4} md={6} xs={12}>
             <JobCard
               title={job.jobRole}
               companyName={job.companyName}
@@ -208,18 +217,25 @@ function App() {
             />
           </Grid>
         ))}
-      </Grid>
 
-      {loading && (
-        <Stack
-          direction="row"
-          sx={{ width: "100%", padding: "2rem 0", justifyContent: "center" }}
-        >
-          <Typography>Hang on! Getting more jobs...</Typography>
-        </Stack>
-      )}
+
+        <Grid item xs={12}>
+          <Stack
+            direction="row"
+            sx={{
+              width: "100%",
+              padding: "2rem 0",
+              justifyContent: "center",
+            }}
+          >
+            {!loading && error ? <Typography>{error}</Typography> : loading && (<Typography>Hang on! Getting more jobs...</Typography>)}
+          </Stack>
+        </Grid>
+
+      </Grid>
     </Container>
   );
 }
+
 
 export default App;

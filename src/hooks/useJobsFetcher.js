@@ -4,6 +4,7 @@ export const useJobsFetcher = (offset, limit,) => {
     const [jobs, setJobs] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         fetchJobs();
@@ -35,8 +36,8 @@ export const useJobsFetcher = (offset, limit,) => {
                 setJobs(prev => [...prev, ...result.jdList]);
                 setTotalCount(result.totalCount);
             })
-            .catch((error) => console.error(error)).finally(() => setLoading(false))
+            .catch((error) => setError(error.message || "Something went wrong!")).finally(() => setLoading(false))
     };
 
-    return { jobs, totalCount, loading };
+    return { jobs, totalCount, loading, error };
 };
